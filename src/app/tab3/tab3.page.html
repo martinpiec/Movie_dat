@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pozreté filmy</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-radio-group [(ngModel)]="sortBy" (ionChange)="changeSortOrder($event.detail.value)">
+    <ion-item>
+      <ion-label>Dátum</ion-label>
+      <ion-radio slot="start" value="date"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hodnotenie</ion-label>
+      <ion-radio slot="start" value="rating"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+  <ion-list *ngIf="watchedMovies.length > 0">
+    <ion-item *ngFor="let movie of watchedMovies">
+      <ion-thumbnail slot="start">
+        <img [src]="movie.Poster" *ngIf="movie.Poster" alt="Film Poster" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ movie.Title }} ({{ movie.Year }})</h2>
+        <p>Hodnotenie: {{ movie.rating }}</p>
+        <p>Pridané: {{ movie.dateAdded | date: 'short' }}</p>
+      </ion-label>
+      <ion-button slot="end" color="danger" (click)="removeWatchedMovie(movie)">
+        Odstrániť
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="watchedMovies.length === 0">
+    <ion-label>Žiadne pozreté filmy.</ion-label>
+  </ion-item>
+</ion-content>

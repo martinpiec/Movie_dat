@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vyhľadávanie filmov</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="query" (ionInput)="searchMovies()" placeholder="Hľadaj filmy"></ion-searchbar>
+
+  <ion-list *ngIf="movies.length > 0">
+    <ion-item *ngFor="let movie of movies">
+      <ion-thumbnail slot="start">
+        <img [src]="movie.Poster" *ngIf="movie.Poster" alt="Film Poster" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ movie.Title }} ({{ movie.Year }})</h2>
+
+        <!-- Hodnotenie -->
+        <p>Hodnotenie:</p>
+        <div class="rating-container">
+          <ion-button *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]" 
+                      (click)="setRating(movie, num)" 
+                      [color]="movie.rating === num ? 'primary' : 'medium'">
+            {{ num }}
+          </ion-button>
+        </div>
+        
+        <p>
+          <ion-button (click)="addToFavorites(movie)" color="warning">Pridať do obľúbených</ion-button>
+          <ion-button (click)="markAsWatched(movie)">Pridať medzi pozreté</ion-button>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="movies.length === 0">
+    <ion-label>Žiadne filmy.</ion-label>
+  </ion-item>
+</ion-content>

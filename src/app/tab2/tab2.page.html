@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Obľúbené filmy</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Zobrazenie obľúbených filmov, ak existujú -->
+  <div *ngIf="favorites.length > 0">
+    <h3>Obľúbené filmy:</h3>
+    <ul>
+      <li *ngFor="let movie of favorites">
+        <div>
+          <img [src]="movie.Poster" alt="Film poster" *ngIf="movie.Poster" />
+          <h4>{{ movie.Title }} ({{ movie.Year }})</h4>
+          <!-- Tlačidlo na odstránenie filmu z obľúbených -->
+          <ion-button (click)="removeFromFavorites(movie)" color="danger">
+            Odstrániť
+          </ion-button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Ak nie sú žiadne obľúbené filmy -->
+  <div *ngIf="favorites.length === 0">
+    <p>Žiadne obľúbené filmy.</p>
+  </div>
+</ion-content>
